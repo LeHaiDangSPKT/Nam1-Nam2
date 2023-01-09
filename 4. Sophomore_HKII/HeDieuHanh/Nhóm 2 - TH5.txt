@@ -1,0 +1,418 @@
+BAI1:
+
+a 100
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		   ;Xoa man hinh
+mov ah, 02
+mov bh, 00
+mov dh, 0f	
+mov dl, 00
+int 10	  		;Xac dinh vi tri con tro	
+mov cx, 50        ;loop 80 lan
+mov dl, 30	; dl = 0
+mov ah, 02	
+int 21		;print dl
+inc dl		;dl ++
+cmp dl, 3a	;so sanh dl voi 10
+jnz 12a		
+mov dl, 30
+loop 11d
+mov ah, 08
+int 21
+int 20
+
+BAI2:
+
+a 100
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		
+mov cx, 19	
+mov dh, 00	
+mov dl, 30	
+push dx
+mov ah, 02
+mov bh, 00
+mov dl, 27	
+int 10		
+pop dx
+mov ah, 02
+int 21
+inc dh
+inc dl
+cmp dl, 3a
+jnz 12e
+mov dl, 30
+loop 115
+mov ah, 08
+int 21
+int 20
+
+BAI3:
+
+a 100
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		
+mov cx, 50
+mov ah, 02
+mov bh, 00
+mov dh, 0f	
+mov dl, 00
+int 10			
+mov dl, 30
+mov ah, 02
+int 21
+inc dl
+cmp dl, 3a
+jnz 12a
+mov dl, 30
+loop 11d	
+mov cx, 19	
+mov dh, 00	
+mov dl, 30	
+push dx
+mov ah, 02
+mov bh, 00
+mov dl, 37	
+int 10		
+pop dx
+mov ah, 02
+int 21
+inc dh
+inc dl
+cmp dl, 3a
+jnz 14c
+mov dl, 30
+loop 133
+mov ah, 08
+int 21
+int 20
+
+BAI4:
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2     ;xd tao do in dong dau cot
+mov bh,0
+mov dh,7	;dong 7
+mov dl,0
+int 10
+mov dl,30
+mov cx,50
+mov ah,2	;1
+int 21
+inc dl
+cmp dl,3a
+jnz 12a		;2
+mov dl,30
+loop 11D	;1,2	
+mov dh,0	
+mov dl,30
+mov cx,19
+push dx		;1
+mov ah,2   
+mov bh,0
+mov dl,2f
+int 10
+pop dx
+mov ah,2	
+int 21
+inc dl
+inc dh
+cmp dl,3a
+jnz 14c		;2
+mov dl,30	
+loop 133	;1,2 in xong chu
+mov dl,15	 ;1
+mov cx,2c
+push cx		;3
+mov dh,6
+mov cx,0c
+push cx		;2
+mov ah,2
+mov bh,0
+int 10
+mov ah,8
+int 10
+mov ah,9
+mov bh,0
+add bl,0b
+mov cx,1
+int 10
+inc dh
+pop cx
+loop 159 	;2
+inc dl
+pop cx
+loop 153	;3
+mov ah,8
+int 21
+cmp al,1b
+jz 187 		;4
+add bl,7
+jmp 14e		;1
+int 20		;4
+
+BAI5:
+
+a 100
+mov dh, 05	
+push dx
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		
+pop dx
+mov dl, 00	
+mov bl, 00
+mov cx, 50
+push cx		
+mov ah, 02
+mov bh, 00
+int 10		
+mov ah, 09
+mov bh, 00
+add bl, 11	
+mov cx, 01
+int 10
+inc dl
+pop cx
+loop 119
+mov ah, 08
+int 21
+cmp al, 1b
+jz 144
+inc dh
+cmp dh, 0f
+jnz 142
+mov dh, 05
+jmp 102
+int 20
+
+BAI6:
+
+a 100
+mov dl, 14	
+push dx
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		
+pop dx
+mov dh, 00	
+mov bl, 00
+mov cx, 19
+push cx		
+mov ah, 02
+mov bh, 00
+int 10		
+mov ah, 09
+mov bh, 00
+add bl, 11	
+mov cx, 01
+int 10
+inc dh
+pop cx
+loop 119
+mov ah, 08
+int 21
+cmp al, 1b
+jz 144
+inc dl
+cmp dl, 32
+jnz 142
+mov dl, 14
+jmp 102
+int 20 
+
+BAI7:
+
+a 100
+mov dh, 05	
+push dx
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		
+mov cx, 50
+mov ah, 02
+mov bh, 00
+mov dh, 0f	
+mov dl, 00
+int 10			
+mov dl, 30
+mov ah, 02
+int 21
+inc dl
+cmp dl, 3a
+jnz 12d
+mov dl, 30
+loop 120	
+mov cx, 19	
+mov dh, 00	
+mov dl, 30	
+push dx
+mov ah, 02
+mov bh, 00
+mov dl, 37	
+int 10		
+pop dx
+mov ah, 02
+int 21
+inc dh
+inc dl
+cmp dl, 3a
+jnz 14f
+mov dl, 30
+loop 136	
+pop dx
+mov dl, 00	
+mov bl, 00
+mov cx, 50
+push cx		
+mov ah, 02
+mov bh, 00
+int 10		
+mov ah, 08
+int 10
+mov ah, 09
+mov bh, 00
+add bl, 11	
+mov cx, 01
+int 10
+inc dl
+pop cx
+loop 159
+mov ah, 08
+int 21
+cmp al, 1b
+jz 189
+inc dh
+cmp dh, 0f
+jnz 186
+mov dh, 05
+jmp 102
+int 20
+
+BAI8:
+
+a 100
+mov dl, 14	
+push dx
+mov ah, 06
+mov al, 00
+mov bh, 07
+mov cx, 00
+mov dx, 184f
+int 10		
+mov cx, 50
+mov ah, 02
+mov bh, 00
+mov dh, 0f	
+mov dl, 00
+int 10			
+mov dl, 30
+mov ah, 02
+int 21
+inc dl
+cmp dl, 3a
+jnz 12d
+mov dl, 30
+loop 120	
+mov cx, 19	
+mov dh, 00	
+mov dl, 30	
+push dx
+mov ah, 02
+mov bh, 00
+mov dl, 37	
+int 10		
+pop dx
+mov ah, 02
+int 21
+inc dh
+inc dl
+cmp dl, 3a
+jnz 14f
+mov dl, 30
+loop 136	
+pop dx
+mov dh, 00	
+mov bl, 00
+mov cx, 19
+push cx		
+mov ah, 02
+mov bh, 00
+int 10		
+mov ah, 08
+int 10
+mov ah, 09
+mov bh, 00
+add bl, 11	
+mov cx, 01
+int 10
+inc dh
+pop cx
+loop 159
+mov ah, 08
+int 21
+cmp al, 1b
+jz 189
+inc dl
+cmp dl, 32
+jnz 186
+mov dl, 14
+jmp 102
+int 20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

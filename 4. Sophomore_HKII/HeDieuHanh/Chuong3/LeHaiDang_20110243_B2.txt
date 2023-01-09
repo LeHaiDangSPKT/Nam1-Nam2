@@ -1,0 +1,448 @@
+6.1
+
+a 100
+mov ah,1 ; nhap 1 ki tu
+int 21
+cmp al, 1b ; so sanh voi phim esc
+jz 118   ; neu dung ket thuc chuong trinh
+push ax  ; ghi lai kt nhap
+mov ah,2 ; in khoang trang
+mov dl, 20 ; 20 la ASCII ' '
+int 21
+pop dx	; day ket qua ra
+int 21
+mov dl,20 ; in khoang trang
+int 21
+jmp 100   ; nhay ve dau chuong trinh
+int 20    ; ket thuc chuong trinh
+
+
+6.2
+
+a 100
+mov ah,1 
+int 21
+cmp al, 1b 
+jz 122 
+push ax  
+mov ah,2 
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+pop dx	
+int 21
+mov ah,2 
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+jmp 100   
+int 20
+
+6.3
+   
+a 100
+mov ah,8 
+int 21
+cmp al, 1b 
+jz 116 
+push ax  
+pop dx
+mov ah,2
+int 21
+mov ah,2 
+mov dl,20
+int 21
+jmp 100   
+int 20 
+
+6.4
+
+a 100
+mov dl, 20
+mov cx,DF ; FF - 20 = DF
+mov ah, 2
+int 21
+push ax
+mov dl,20
+int 21
+pop dx
+inc dl
+loop 105
+int 20
+
+6.5
+
+ a 100
+ mov ah,0a
+ mov dx,200
+ int 21
+ mov ah,2
+ mov dl,0a
+ int 21
+ mov dl,0d
+ int 21
+ mov ah,9
+ mov dx,202
+ int 21
+ mov ah,2
+ mov dl,0a
+ int 21
+ mov dl,0d
+ int 21
+ mov ah,9
+ mov dx,150
+ int 21
+ mov ah,8
+ int 21
+ cmp al,1b
+ jz 13D
+ mov ah, 2
+ mov dl,0a
+ int 21
+ mov dl,0d
+ int 21
+ jmp 100
+ int 20
+
+ e 150  "Bam phim bat ky de tiep tuc, ESC de ket thuc..$"
+
+
+6.6
+
+a 100
+mov ah,8
+int 21
+cmp al,1b
+jz 121
+push ax
+mov ah,9
+mov dx, 150
+int 21
+pop dx
+mov ah,2
+int 21
+mov ah,2
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+jmp 100
+int 20
+
+
+e 150 "Ky tu da nhap : $"
+
+
+6.7
+
+a 100
+mov ax,0000
+int 33
+mov ah,8
+int 21
+cmp al,1b
+jz 125
+cmp al,68
+jz 117
+cmp al,61
+jz 11E
+jmp 105
+mov ax,0001
+int 33
+jmp 105
+mov ax,0002
+int 33
+jmp 105
+int 20
+
+6.8
+
+a 100
+mov ax,0001
+int 33
+mov ax,0003
+int 33
+push dx
+push cx
+mov cx,2 
+push cx
+mov ah,2
+mov bh,0
+mov dx,1840
+int 10
+pop cx
+pop ax
+push cx
+mov bx,000A
+mov cx,0000
+mov dx,0000
+div bx
+push dx
+inc cx
+cmp ax,0000
+jnz 0122
+cmp cx,03
+jz 013A
+mov dx,0000
+push dx
+inc cx
+jmp 012E
+mov ah,02
+pop dx
+add dl, 30
+int 21
+loop 13c
+mov dl,20
+int 21
+pop cx
+loop 11A
+jmp 105
+int 20
+
+
+6.9
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2
+mov bh,0
+mov dh,0
+mov dl,0
+int 10
+int 20
+
+6.10
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov dh, 5
+mov dl, 2
+mov cx,5
+mov ah,2
+mov bh,0
+int 10
+push cx
+mov cx, 6
+mov ah,2
+push dx
+mov dl,58
+int 21
+loop 122
+pop dx
+inc dh
+mov dl, 2
+pop cx
+loop 115
+int 20
+
+6.11
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov dl,30
+mov cx,0a
+push cx 
+push dx
+mov dl,30
+mov cx,0a
+mov bl,dl
+pop dx
+mov ah,2
+int 21
+push dx
+mov dl, bl
+int 21
+mov ah,2
+mov dl,20
+int 21
+inc bl
+loop 11c
+pop dx
+inc dl
+pop cx
+loop 113
+int 20
+
+6.12
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2
+mov bh,0
+mov dh,0c
+mov dl,20
+int 10
+mov ah,09
+mov dx,150
+int 21
+int 20
+
+
+e 150 "Truong DH SPKT$"
+
+6.13
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2
+mov bh,0
+mov dh,0
+mov dl,42
+int 10
+mov ah,09
+mov dx,150
+int 21
+int 20
+
+
+e 150 "Truong DH SPKT$"
+
+6.14
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov al,0
+mov bh,70
+mov cx,0000
+mov dx,084f
+int 10
+mov al,0
+mov bh,40
+mov cx,0800
+mov dx,104f
+int 10
+mov ah,2
+mov bh,0
+mov dh,4
+mov dl,20
+int 10
+mov ah,09
+mov dx,250
+int 21
+mov ah,2
+mov bh,0
+mov dh,0c
+mov dl,20
+int 10
+mov ah,09
+mov dx,250
+int 21
+mov ah,2
+mov bh,0
+mov dh,14
+mov dl,20
+int 10
+mov ah,09
+mov dx,250
+int 21
+mov cx,2
+mov ah,2 
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+loop 15c
+int 20
+
+
+e 250 "Truong DH SPKT$"
+
+
+6.15
+
+a 100
+mov ah,6
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov al,0
+mov bh,70
+mov cx,0000
+mov dx,181b
+int 10
+mov al,0
+mov bh,40
+mov cx,001b
+mov dx,1835
+int 10
+mov ah,2
+mov bh,0
+mov dh,0c
+mov dl,06
+int 10
+mov ah,09
+mov dx,250
+int 21
+mov ah,2
+mov bh,0
+mov dh,0c
+mov dl,21
+int 10
+mov ah,09
+mov dx,250
+int 21
+mov ah,2
+mov bh,0
+mov dh,0c
+mov dl,3c
+int 10
+mov ah,09
+mov dx,250
+int 21
+mov cx,9
+mov ah,2 
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+loop 15c
+int 20
+
+
+e 250 "Truong DH SPKT$"
+
+
+
+
+
+
+
+
+
+
+
+

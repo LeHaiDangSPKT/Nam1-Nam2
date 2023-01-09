@@ -1,0 +1,474 @@
+6.2
+-d 0:0
+0000:0000  68 10 A7 00 8B 01 70 00-16 00 8F 03 8B 01 70 00   h.....p.......p.
+0000:0010  8B 01 70 00 B9 06 0A 02-40 07 0A 02 FF 03 0A 02   ..p.....@.......
+0000:0020  46 07 0A 02 0A 04 0A 02-3A 00 8F 03 54 00 8F 03   F.......:...T...
+0000:0030  6E 00 8F 03 88 00 8F 03-A2 00 8F 03 FF 03 0A 02   n...............
+0000:0040  A9 08 0A 02 A4 09 0A 02-AA 09 0A 02 5D 04 0A 02   ............]...
+0000:0050  B0 09 0A 02 0D 02 D9 02-C4 09 0A 02 8B 05 0A 02   ................
+0000:0060  0E 0C 0A 02 14 0C 0A 02-1F 0C 0A 02 AD 06 0A 02   ................
+0000:0070  AD 06 0A 02 A4 F0 00 F0-37 05 0A 02 3A 13 00 C0   ........7...:...
+
+6.3
+13hx4=4Ch
+Off=4d4c=045d
+Seg=4f4e=020a
+
+-u 020a:045d
+ CMP     DL,80
+ JB      048A
+ CMP     AH,02
+ JB      0484
+ CMP     AH,05
+ JBE     0476
+ CMP     AH,0A
+ JB      0484
+ CMP     AH,0C
+ JA      0484
+ PUSH    AX
+ MOV     AX,0001
+ LES     AX,SP
+ POP     CX
+  POP     AX
+  MOV     AH,80
+  STC
+  RETF    0002
+  LES     AX,SP
+  ADC     CX,DX
+  ADD     AL,[BX+SI]
+  LES     AX,SP
+  INC     AX
+  RETF    0002
+  PUSH    DS
+  PUSH    AX
+  PUSH    CX
+  MOV     AX,0040
+  MOV     DS,AX
+  MOV     CX,0010
+  MOV     AL,3E
+ TEST    AL,80
+ LOOPZ   049B
+ POP     CX
+ POP     AX
+ POP     DS
+ LES     AX,SP
+ INC     BYTE PTR [BX+DI]
+ RET     8204
+ IRET
+
+
+6.4
+C822
+1100100000100010
+TB:
+cooperation
+80x25 CGA color
+game port installed
+LPT ports
+
+6.5
+d b800:0
+B800:0000  4D 07 69 07 63 07 72 07-6F 07 73 07 6F 07 66 07   M.i.c.r.o.s.o.f.
+B800:0010  74 07 20 07 57 07 69 07-6E 07 64 07 6F 07 77 07   t. .W.i.n.d.o.w.
+B800:0020  73 07 20 07 58 07 50 07-20 07 5B 07 56 07 65 07   s. .X.P. .[.V.e.
+B800:0030  72 07 73 07 69 07 6F 07-6E 07 20 07 35 07 2E 07   r.s.i.o.n. .5...
+B800:0040  31 07 2E 07 32 07 36 07-30 07 30 07 5D 07 20 07   1...2.6.0.0.]. .
+B800:0050  20 07 20 07 20 07 20 07-20 07 20 07 20 07 20 07    . . . . . . . .
+B800:0060  20 07 20 07 20 07 20 07-20 07 20 07 20 07 20 07    . . . . . . . .
+B800:0070  20 07 20 07 20 07 20 07-20 07 20 07 20 07 20 07    . . . . . . . .
+-e b800:000c
+B800:000C  6F.41
+-e b800:000d
+B800:000D  07.2
+
+
+6.6
+-d ffff:0
+FFFF:0000  EA 5B E0 00 F0 30 32 2F-32 37 2F 32 30 00 FC A6   .[...02/27/20...
+FFFF:0010  34 12 00 00 00 00 00 00-00 00 00 00 00 00 00 00   4...............
+FFFF:0020  00 00 00 00 00 00 00 00-00 00 00 00 00 00 00 00   ................
+FFFF:0030  70 00 2E 8E 06 30 00 BF-7F 01 B9 02 00 AB 47 47   p....0........GG
+FFFF:0040  E2 FB CB 56 50 51 52 57-55 1E 06 53 8B EC 8B 76   ...VPQRWU..S...v
+FFFF:0050  12 2E 8E 1E 30 00 8B 44-02 A2 22 00 88 26 08 01   ....0..D.."..&..
+FFFF:0060  8B 34 C4 1E 18 00 26 8A-47 01 26 8A 67 0D 26 8B   .4....&.G.&.g.&.
+FFFF:0070  4F 12 26 8B 57 14 97 26-8A 47 02 2E 3A 04 73 2C   O.&.W..&.G..:.s,
+
+
+6.7
+
+-e 200 "Du lieu nhap tuy chon"
+-d200
+0ADD:0200  44 75 20 6C 69 65 75 20-6E 68 61 70 20 74 75 79   Du lieu nhap tuy
+0ADD:0210  20 63 68 6F 6E 60 E8 74-E4 73 06 E8 7F DB E9 AD    chon`.t.s......
+0ADD:0220  D8 8B D5 83 C2 05 8A 7E-04 80 E7 06 80 FF 06 75   .......~.......u
+0ADD:0230  18 8B 76 02 B3 3A 38 5C-FE 75 06 C6 46 00 02 EB   ..v..:8\.u..F...
+0ADD:0240  05 C6 46 00 01 4E E9 83-00 80 FF 02 75 05 C6 46   ..F..N......u..F
+0ADD:0250  00 00 C3 E8 B6 EB B4 3B-CD 21 72 39 8B FA 33 C0   .......;.!r9..3.
+0ADD:0260  8B C8 49 26 8A 05 47 0A-C0 74 0C 32 E4 E8 23 E2   ..I&..G..t.2..#.
+0ADD:0270  74 F1 47 FE C4 EB EC 4F-A0 03 96 C6 46 00 02 0A   t.G....O....F...
+
+6.8
+-n c:\vanban.txt
+-l 100
+-d 100
+
+0ADD:0100  58 69 6E 20 63 68 61 6F-2C 20 74 6F 69 20 6C 61   Xin chao, toi la
+0ADD:0110  20 4C 65 20 48 61 69 20-44 61 6E 67 34 00 CC 0A    Le Hai Dang4...
+0ADD:0120  57 53 5C 53 59 53 54 45-4D 33 32 5C 43 4F 4D 4D   WS\SYSTEM32\COMM
+0ADD:0130  41 4E 44 2E 43 4F 4D 00-41 4C 4C 55 53 45 52 53   AND.COM.ALLUSERS
+0ADD:0140  50 52 4F 46 49 4C 45 3D-43 3A 5C 44 4F 43 55 4D   PROFILE=C:\DOCUM
+0ADD:0150  45 7E 31 5C 41 4C 4C 55-53 45 7E 31 00 41 50 50   E~1\ALLUSE~1.APP
+0ADD:0160  44 41 54 41 3D 43 3A 5C-44 4F 43 55 4D 45 7E 31   DATA=C:\DOCUME~1
+0ADD:0170  5C 4D 61 79 41 6F 31 5C-41 50 50 4C 49 43 7E 31   \MayAo1\APPLIC~1
+
+
+-n c:\vd1.com
+-l 100
+-u 100
+
+MOV     AH,01
+INT     21
+INT     20
+ES:
+MOV     BX,[DI]
+ES:
+CMP     CL,[BX]
+JNB     0111
+MOV     AX,0002
+POP     BX
+JMP     0238
+CS:
+MOV     [90A3],SI
+PUSH    BX
+PUSH    DI
+PUSH    BP
+LEA     BX,[90AB]
+
+
+6.9
+a 100
+ mov ah,1
+ int 21
+ int 20
+
+C:\>debug
+-n bt6_9.com
+-l 100
+-u 100
+0B22:0100 B401          MOV     AH,01
+0B22:0102 CD21          INT     21
+0B22:0104 CD20          INT     20
+
+6.10
+a 100
+mov ah,9
+mov dx,200
+int 21
+int 20
+
+e 200"Truong SPKT$"
+
+-n c:\bt6_10.com
+-l 100
+-u 100
+0B23:0100 B409          MOV     AH,09
+0B23:0102 BA0002        MOV     DX,0200
+0B23:0105 CD21          INT     21
+0B23:0107 CD20          INT     20
+
+
+
+6.11
+10hx4=40
+Off=4140=08a9
+Seg= 4342=020a
+
+u 020a:08a9
+ CS:
+ CMP     BYTE PTR [08A7],02
+ JNZ     08B6
+ CALL    0806
+ JB      0915
+ CS:
+ CMP     BYTE PTR [08A7],01
+ JZ      091B
+ CMP     AH,00
+ JZ      08F3
+ CMP     AH,1C
+ JA      08D3
+ CMP     AH,04
+ JZ      08ED
+ LES     AX,SP
+ INC     DX
+ JMP     0915
+ NOP
+ CMP     AH,4F
+ JNZ     08DE
+ LES     AX,SP
+ MOV     SI,73EB
+ NOP
+ CMP     AH,F0
+ JB      0918
+ CMP     AH,F7
+ JBE     08ED
+ CMP     AH,FA
+...
+
+ ADD     BX,[BX+DI+2B03]
+ MOV     AL,[A03C]
+ XCHG    SP,AX
+ MOV     AL,[A264]
+ IRET
+
+
+6.12
+Địa chỉ bộ nhớ: 2x5x80 + 5 + 5 = 32ah
+-e b800:032a
+B800:032A  30.41
+-e b800:032b
+B800:032B  07.70
+
+
+6.13
+a 100
+ mov dl,41
+ mov ah,2
+ int 21
+ int 20
+
+
+6.14
+a 100
+mov ah,9
+mov dx,150
+int 21
+int 20
+
+
+e 150"tttttttttttttttt$"
+
+
+6.15
+a 100
+mov ah,8
+int 21
+push ax
+mov ah,9
+mov dx,200
+int 21
+pop dx
+mov ah,2
+int 21
+int 20
+
+
+e 200"Ki tu vua nhap: $"
+
+
+6.16
+a 100
+mov ah,0a
+mov dx,200
+int 21
+mov ah,2     ;xuong dong
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+mov ah,9
+mov dx,202
+int 21
+int 20
+
+
+
+6.17
+a 100
+mov dl,41
+mov cx,1a
+mov ah,2
+int 21
+push dx
+mov dl,20
+int 21
+pop dx
+inc dl
+loop 105
+int 20
+
+
+6.18
+a 100
+mov dl,61
+mov cx,1a
+mov ah,2
+int 21
+push dx
+mov dl,20
+int 21
+pop dx
+inc dl
+loop 105
+int 20
+
+
+6.19
+a 100
+mov ah,8
+int 21
+cmp al,1b
+jz 114
+mov dl,al
+mov ah,2
+int 21
+mov dl,20
+int 21
+jmp 100
+int 20
+
+
+6.20
+a 100
+mov ah,9	;TB chi in
+mov dx, 200
+int 21
+mov dl,41	;in chu in A...Z
+mov cx,1a
+mov ah,2	;dau
+int 21
+push dx
+mov dl,20
+int 21
+pop dx
+inc dl
+loop 10c
+mov ah,2	;xuong dong
+mov dl,0a
+int 21
+mov dl,0d
+int 21
+mov ah,9	;thong bao so
+mov dx,210
+int 21
+mov dl,30	;in chu so
+mov cx,0a
+mov ah,2	;dau
+int 21
+push dx
+mov dl,20
+int 21
+pop dx
+inc dl
+loop 130
+mov ah,2	;xuong dong 
+mov dl, 0a
+int 21
+mov dl,0d
+int 21
+mov ah,9	;thong bao chu thuong
+mov dx,220
+int 21
+mov dl,61	;in chu
+mov cx,1a
+mov ah,2	;dau
+int 21
+push dx
+mov dl,20
+int 21
+pop dx
+inc dl
+loop 154
+int 20
+
+e 200"Chu in: $"
+e 210"Chu so: $"
+e 220"Chu thuong: $"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

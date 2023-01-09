@@ -1,0 +1,14 @@
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\bin\Debug\netcoreapp3.1\QuanLySanPham.exe
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\bin\Debug\netcoreapp3.1\QuanLySanPham.deps.json
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\bin\Debug\netcoreapp3.1\QuanLySanPham.runtimeconfig.json
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\bin\Debug\netcoreapp3.1\QuanLySanPham.runtimeconfig.dev.json
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\bin\Debug\netcoreapp3.1\QuanLySanPham.dll
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\bin\Debug\netcoreapp3.1\QuanLySanPham.pdb
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.csproj.AssemblyReference.cache
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.AssemblyInfoInputs.cache
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.AssemblyInfo.cs
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.csproj.CoreCompileInputs.cache
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.dll
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.pdb
+C:\Users\PC\Downloads\OOP(3) + LINQ\OOP_QuanLySanPham\QuanLySanPham\QuanLySanPham\obj\Debug\netcoreapp3.1\QuanLySanPham.genruntimeconfig.cache

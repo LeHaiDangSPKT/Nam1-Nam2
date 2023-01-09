@@ -1,0 +1,14 @@
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.csprojAssemblyReference.cache
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.csproj.CoreCompileInputs.cache
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\bin\Debug\QuanLyShopQuanAo.exe.config
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\bin\Debug\QuanLyShopQuanAo.exe
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\bin\Debug\QuanLyShopQuanAo.pdb
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.exe
+D:\3. Object Oriented Programming\Final\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.pdb
+C:\Users\PC\Downloads\QuanLyShopQuanAo\bin\Debug\QuanLyShopQuanAo.exe.config
+C:\Users\PC\Downloads\QuanLyShopQuanAo\bin\Debug\QuanLyShopQuanAo.exe
+C:\Users\PC\Downloads\QuanLyShopQuanAo\bin\Debug\QuanLyShopQuanAo.pdb
+C:\Users\PC\Downloads\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.csproj.AssemblyReference.cache
+C:\Users\PC\Downloads\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.csproj.CoreCompileInputs.cache
+C:\Users\PC\Downloads\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.exe
+C:\Users\PC\Downloads\QuanLyShopQuanAo\obj\Debug\QuanLyShopQuanAo.pdb

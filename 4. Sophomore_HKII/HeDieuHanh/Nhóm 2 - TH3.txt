@@ -1,0 +1,377 @@
+1.
+a 100
+mov cx,0      ;doi mau lien tuc
+push cx
+mov ah,6      ;xoa toan bo man hinh
+mov al,0
+add bh,0b     ;tu doi mau sau moi lan lap
+mov cx,0      ;toa do goc tren trai
+mov dx,184f   ;toa do goc duoi phai
+BAI 1
+
+a 100
+mov cx,0	; Doi mau lien tuc
+push cx
+mov ah,6	; Xoa toan bo MH
+mov al,0
+add bh,0b	;tu doi mau sau moi lan lap
+mov cx,0	;Toa do goc tren trai
+mov dx,184f	;Toa do goc duoi phai
+int 10
+mov ah,9
+mov dx,200
+int 21
+mov cx,0	;lam cham doi mau lan 1
+loop 11D
+mov cx,0	;lam cham doi mau lan 2
+loop 122
+mov cx,0	;lam cham doi mau lan 3
+loop 127
+pop cx
+loop 103
+int 20
+
+e 200 "Nhom 2 - Sang thu 7$"
+
+BAI 2
+
+a 100
+mov ah, 1
+int 21
+cmp al, 1b
+jz 125
+mov ah, 06
+mov al, 00
+add bh, 11
+add bh,0b
+int 10
+mov ah,9
+mov dx,200
+int 21
+mov cx, 00
+mov dx, 184f
+int 10
+jmp 100	
+int 20
+
+e 200 "Nhom 2 - Sang thu 7$"
+
+BAI 3.1
+
+a 100
+mov cx, 00
+push cx
+mov ah, 6
+mov al,0
+add bh,0b
+push bx
+mov cx,0615
+mov dx,123c
+int 10
+mov ah,2
+mov bh,0
+mov dh,0c
+mov dl,2a
+sub dl,0e
+inc dl
+int 10
+mov ah,9
+mov dx,200
+int 21
+mov cx,0
+loop 12D
+mov cx,0
+loop 132
+pop bx
+pop cx
+loop 103
+int 20
+
+e 200 "Nhom 2 - Sang thu 7$"
+
+3.2
+a 100
+mov ah,8		;Doi mau khi nhan 1 phim, ESC de thoat
+int 21
+cmp al,1b		;KT ki tu nhap voi phim ESC
+jz 119		;Neu dung thi KT CT
+mov ah,6 	 	;Xoa toan bo MH
+mov al,0e	 	;So dong cua so
+add bh,0b     	;Mau thay doi sau 1 lan lap
+mov cx,050a	;Toa do goc tren trai (05,10)
+mov dx,123c	;Toa do goc duoi phai (18,60)
+int 10
+jmp 100
+int 20
+
+4.
+a 100
+mov ah,6     ;xoa man hinh
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2     ;dat con tro tai 13,30
+mov bh,0
+mov dx,0d1e
+int 10
+mov ah,0a    ;nhap cau
+mov dx,200
+int 21
+mov ah,2     ;xac dinh toa do 
+mov bh,0     ;in cau nhap
+mov dh,0
+mov dl,50
+sub dl,[201]
+inc dl
+int 10
+mov ah,9     ;in cau nhap
+mov dx,202
+int 21
+mov ah,2    ;xac dinh toa do
+mov bh,0    ;in cau thong bao
+mov dx,1405
+int 10
+mov ah,9    ;in cau thong bao
+mov dx,250
+int 21
+mov ah,8    ;cho bam phim
+int 21
+cmp al,1b   ;neu la ESC 
+jz  14f     ;nhay den ket thuc
+jmp 100     ;nguoc lai ve dau ct
+int 20
+
+
+e 250 "Bam phim bat ky de tiep, ... ESC de ket thuc$"
+
+5.
+a 100
+mov ah,6     ;xoa man hinh
+mov al,0
+mov bh,07
+mov cx,0
+mov dx,184f
+int 10
+mov ah,2     ;xac dinh vi tri nhap
+mov bh,0
+mov dh,18
+mov dl,2
+int 10
+mov ah,0a    ;nhap 1 cau
+mov dx,200
+int 21
+mov ah,2     ;xac dinh vi tri in
+mov bh,0     
+mov dh,5
+mov dl,0a
+int 10
+mov ah,9     ;in cau vua nhap
+mov dx,202
+int 21
+mov ah,2    ;xac dinh vi tri in
+mov bh,0    
+mov dh,16
+mov dl,0a 
+int 10
+mov ah,9    ;in cau thong bao
+mov dx,250
+int 21
+mov ah,8    ;nhap ki tu khong hien
+int 21
+cmp al,1b   ;neu la ESC 
+jz  14b     ;nhay den ket thuc
+jmp 100     ;nguoc lai ve dau ct
+int 20
+
+
+e 250 "Bam phim bat ky de tiep, ... ESC de ket thuc$"
+
+6.
+a 100
+mov bh,0f
+mov ah,06
+mov al,00
+mov cx,00
+mov dx,0c28
+int 10
+add bh,0f
+mov cx,0029
+mov dx,0c50
+int 10
+add bh,0f
+mov cx,0d00
+mov dx,1828
+int 10
+add bh,0f
+mov cx,0d29
+mov dx,1950
+int 10
+jmp 0106
+int 20
+
+7.
+a 100
+mov cx,0
+push cx
+mov ah,6
+mov al,8
+add bh,0f
+mov cx,050a
+mov dx,0c28
+int 10
+mov ah,6
+mov al,8
+add bh,0f
+mov cx,0814
+mov dx,0f32
+int 10
+mov ah,6
+mov al,8
+add bh,0f
+mov cx,0b1e
+mov dx,123c
+int 10
+jmp 0104
+int 20
+
+
+8.
+a 100
+mov ah,06  ;xoa man hinh
+mov al,00
+mov bh,07
+mov cx,00
+mov dx,184f
+int 10
+mov bh,4f  ;tao cai khung
+mov ah,06
+mov al,00
+push bx
+mov cx,0515
+mov dx,123c
+int 10
+mov ah,02  ;vi tri in dong dau
+mov bh,00
+mov dh,0b
+mov dl,28
+sub dl,0a
+inc dl
+int 10
+mov dx,200 ;in dong dau
+mov ah,9
+int 21
+mov ah,02  ;vi tri in dong sau
+mov bh,0
+mov dh,0c
+mov dl,28
+sub dl,07
+inc dl
+int 10
+mov dx,300  ;in dong sau
+mov ah,09
+int 21
+pop bx
+add bh,11
+mov cx,ffff ;delay
+mov ah,09
+loop 150
+jmp 110
+int 20
+
+e 200 "Ho ten: Nguyen Van A$"
+e 300 "MSSV: 0123456789$"
+
+9.
+a 100
+mov ah,06
+mov al,00
+mov bh,07
+mov cx,00
+mov dx,184f
+int 10
+mov bh,4f
+mov ah,06
+mov al,00
+push bx
+mov cx,0515
+mov dx,123c
+int 10
+mov ah,02
+mov bh,00
+mov dh,05
+mov dl,32
+sub dl,0a
+inc dl
+int 10
+mov dx,200
+mov ah,9
+int 21
+mov ah,02
+mov bh,0
+mov dh,06
+mov dl,33
+sub dl,07
+inc dl
+int 10
+mov dx,300
+mov ah,09
+int 21
+pop bx
+add bh,11
+mov cx,ffff
+mov ah,09
+loop 150
+jmp 110
+int 20
+
+e 200 "Ho ten: Nguyen Van A$"
+e 300 "MSSV: 0123456789$"
+
+
+10.
+a 100
+mov ah,06
+mov al,00
+mov bh,07
+mov cx,00
+mov dx,184f
+int 10
+mov bh,4f
+mov ah,06
+mov al,00
+push bx
+mov cx,0515
+mov dx,123c
+int 10
+mov ah,02
+mov bh,00
+mov dh,11
+mov dl,32
+sub dl,0a
+inc dl
+int 10
+mov dx,200
+mov ah,9
+int 21
+mov ah,02
+mov bh,0
+mov dh,12
+mov dl,33
+sub dl,07
+inc dl
+int 10
+mov dx,300
+mov ah,09
+int 21
+pop bx
+add bh,11
+mov cx,ffff
+mov ah,09
+loop 150
+jmp 110
+int 20
+
+e 200 "Ho ten: Nguyen Van A$"
+e 300 "MSSV: 0123456789$"

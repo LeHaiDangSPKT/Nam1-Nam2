@@ -1,0 +1,32 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: VD6 - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\Users\haida\AppData\Local\Temp\RSP32F9.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/VD6.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\NMLT\BT Tuan3 C\VD6\VD6.CPP"
+]
+Creating command line "cl.exe @C:\Users\haida\AppData\Local\Temp\RSP32F9.tmp" 
+Creating temporary file "C:\Users\haida\AppData\Local\Temp\RSP32FA.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/VD6.pdb" /debug /machine:I386 /out:"Debug/VD6.exe" /pdbtype:sept 
+".\Debug\VD6.OBJ"
+]
+Creating command line "link.exe @C:\Users\haida\AppData\Local\Temp\RSP32FA.tmp"
+<h3>Output Window</h3>
+Compiling...
+VD6.CPP
+Linking...
+
+
+
+<h3>Results</h3>
+VD6.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

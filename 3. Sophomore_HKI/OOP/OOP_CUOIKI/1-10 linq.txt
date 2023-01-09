@@ -1,0 +1,329 @@
+  
+        // 1. Cho biết tên, địa chỉ và số điện thoại của các khách hàng theo loại cho trước. 
+        // 2. Liệt kê tên và địa chỉ các nơi cung cấp sản phẩm có thời gian bảo hành dưới 8 tháng.  
+        // 3. Cho biết số lượng sản phẩm đã mua của mỗi khách hàng trong mỗi hóa đơn.   
+
+        // 4. Cho biết tổng số tiền các sản phẩm bán được trong mỗi tháng. 
+        // 5. Cho biết mã và tên các sản phẩm còn hàng. 
+
+        // 6. Cho biết loại khách hàng được nhiều nhân viên tư vấn nhất.
+        // 7. Cho biết thương hiệu có sản phẩm bán chạy nhất.
+
+        // 8. Cho biết nhân viên tư vấn nhiều hóa đơn mua có đơn giá lớn nhất. (*)
+        // 9. Cho biết khách hàng đã thanh toán nhiều hình thức có đơn giá lớn nhất. (*)
+        // 10.Cho biết loại khách hàng đã thanh toán ít hình thức có đơn giá nhỏ nhất. (*)
+
+        public static void Linq01(string loaiKhachHang)
+        {
+            var dskhachhang = from khachhang in dsKhachHang
+                              where khachhang.loaiKhachHang.tenLoaiKhachHang == loaiKhachHang
+                              select khachhang;
+
+            Console.WriteLine("============= Danh sách khách hàng loại {0} =============", loaiKhachHang);
+            Console.WriteLine("          Tên khách hàng      |     Địa chỉ          |       SĐT");
+            foreach (var khachhang in dskhachhang) 
+            {
+                Console.WriteLine("\t  {0}    |   {1}    |    {2}", khachhang.tenKhachHang, khachhang.diaChi, khachhang.SDT);
+            }            
+        }
+        public static void Linq02()
+        {
+            var dsNCC = (from sp in dsChiTietHDNhapHang
+                         where sp.sanPham.phieuBaoHanh.thoiGianBaoHanh < 8
+                         select new 
+                         { 
+                             tenNCC = sp.hoaDonNhapHang.noiCungCap.tenNoiCungCap,
+                             diaChiNCC = sp.hoaDonNhapHang.noiCungCap.diaChi 
+                         }).Distinct();
+
+            Console.WriteLine("============= Danh sách nơi cung cấp sản phẩm có thời gian bảo hành dưới 8 tháng =============");
+            foreach (var ncc in dsNCC)
+            {
+                Console.WriteLine("\t   {0}    |   {1}", ncc.tenNCC, ncc.diaChiNCC);
+            }
+            Console.WriteLine("------------------------------------------------------------------------------------");
+        }
+        public static void Linq03()
+        {          
+            // 
+            var ds = from HDMua in dsHoaDonMuaHang
+                      join HDChiTiet in dsChiTietHDMuaHang on HDMua.maHoaDonMuaHang equals HDChiTiet.maHoaDonMuaHang into gr
+                      select new
+                      {
+                          tenKH = HDMua.khachHang.tenKhachHang,
+                          maHoaDon = HDMua.maHoaDonMuaHang,
+                          soLuong = gr.Sum(n => n.soLuong)
+                      };
+            var ds2 = ds.GroupBy(kh => kh.tenKH);
+         
+            foreach (var kh in ds2)
+            {
+                Console.WriteLine("         Khách hàng {0}", kh.Key);
+                Console.WriteLine("     Mã hóa đơn  |     Số lượng");
+                foreach (var sl in kh)
+                {
+                    Console.WriteLine("     {0}      |     {1}", sl.maHoaDon, sl.soLuong);
+                }
+                Console.WriteLine();
+            }
+        }       
+        public static void Linq04()
+        {
+            // Tính tổng số tiền bán sản phẩm theo từng tháng
+            var ds = from hd in dsChiTietHDMuaHang
+                     group hd by hd.hoaDonMuaHang.ngayMua.Month into gr
+                     select new
+                     {
+                         thangmua = gr.Key,
+                         tongSoTien = gr.Sum(n => n.donGia)
+                     };
+
+            Console.WriteLine("============= Danh sách tổng số tiền bán theo tháng =============");
+            Console.WriteLine("           Tháng    |    Tổng số tiền "); 
+            foreach (var hd in ds)
+            {
+                
+                Console.WriteLine("             {0}      |      {1}", hd.thangmua, hd.tongSoTien);
+            }
+        }
+        public static void Linq05()
+        {
+            // 1: Tình tổng số lượng sản phẩm đã nhập theo từng sản phẩm.
+            // 2: Tình tổng số lượng sản phẩm đã mua theo từng sản phẩm.
+            // 3: Kiểm tra nếu số lượng nhập khác số lượng mua (số lượng nhập - số lượng mua != 0) => sản phẩm còn hàng.
+            var dsSPNhap = from sp in dsChiTietHDNhapHang
+                           group sp by new { sp.sanPham.tenSanPham, sp.maSanPham } into gr
+                           orderby gr.Key.maSanPham
+                           select new
+                           {
+                               maSP = gr.Key.maSanPham,
+                               tenSP = gr.Key.tenSanPham,
+                               soLuongNhap = gr.Sum(n => n.soLuong)
+                           };
+            var dsSPMua = from sp in dsChiTietHDMuaHang
+                          group sp by new { sp.sanPham.tenSanPham, sp.maSanPham } into gr
+                          orderby gr.Key.maSanPham
+                          select new
+                          {
+                              maSP = gr.Key.maSanPham,
+                              tenSP = gr.Key.tenSanPham,
+                              soLuongMua = gr.Sum(n => n.soLuong)
+                          };
+            var dsHetHang = (from spNhap in dsSPNhap
+                            join spMua in dsSPMua on spNhap.maSP equals spMua.maSP
+                            where spNhap.soLuongNhap != spMua.soLuongMua 
+                            orderby spNhap.maSP
+                            select new
+                            {
+                                masp = spNhap.maSP,
+                                tensp = spNhap.tenSP
+                            }).Distinct();
+
+            foreach(var sp in dsSPNhap)
+            {
+                Console.WriteLine("{0} - {1} - {2}", sp.tenSP, sp.maSP, sp.soLuongNhap);
+            }
+            Console.WriteLine("==========================");
+            foreach (var sp in dsSPMua)
+            {
+                Console.WriteLine("{0} - {1} - {2}", sp.tenSP, sp.maSP, sp.soLuongMua);
+            }
+
+            Console.WriteLine("============= Danh sách sản phẩm còn hàng =============");
+            Console.WriteLine("           Mã SP      |      Tên SP ");
+            foreach (var sp in dsHetHang)
+            {
+                Console.WriteLine("           {0}      |      {1}", sp.masp, sp.tensp);
+            }
+        }
+        public static void Linq06()
+        {
+            // 1: Đếm số lượng nhân viên tư vấn theo từng loại khách hàng.
+            // 2: Lọc ra loại khách hàng có nhiều nhân viên tư vấn nhất.
+            var ds = from kh in dsHoaDonMuaHang
+                     group kh by new
+                     {
+                         kh.khachHang.loaiKhachHang.tenLoaiKhachHang,
+                         kh.nhanVien.tenNhanVien
+                     } into gr
+                     select new
+                     {
+                         tenLoaiKH = gr.Key.tenLoaiKhachHang,
+                         tenNV = gr.Key.tenNhanVien,
+                         soLuongNV = gr.Count()
+                     };
+            var ds2 = from kh in ds
+                      where kh.soLuongNV == ds.Max(n => n.soLuongNV)
+                      select kh.tenLoaiKH;
+
+            //foreach(var kh in ds)
+            //{
+            //    Console.WriteLine("{0} - {1} -{2}", kh.tenLoaiKH, kh.tenNV, kh.soLuongNV);
+            //}    
+
+            Console.WriteLine("============= Loại khách hàng được nhiều nhân viên tư vấn nhất =============");
+            foreach(var kh in ds2)
+            {
+                Console.WriteLine("         Loại khách hàng: {0}", kh);
+            }
+
+        }
+        public static void Linq07()
+        {
+            // 1: Tính tổng số lượng sản phẩm được mua của mỗi thương hiệu.
+            // 2: Lọc ra thương hiệu có số lượng sản phẩm được mua nhiều nhất .
+            var ds = from th in dsChiTietHDMuaHang
+                     group th by th.sanPham.thuongHieu.tenThuongHieu into gr                    
+                     select new
+                     {
+                         tenTH = gr.Key,
+                         soLuong = gr.Sum(n => n.soLuong)
+                     };
+            var ds1 = from th in ds
+                      where th.soLuong == ds.Max(n => n.soLuong)
+                      select th;
+
+            Console.WriteLine("============= Thương hiệu có sản phẩm bán chạy nhất =============");
+            foreach (var th in ds1)
+            {
+                Console.WriteLine("         Thương hiệu: {0}", th.tenTH);
+            }
+        }
+        public static void Linq08()
+        {
+            // 1: Tính tổng đơn giá trên mỗi hóa đơn mua.
+            // 2: Lọc ra các đơn giá lớn nhất và đồng thời đếm số hóa đơn có đơn giá lớn nhất của mỗi nhân viên.
+            // 3: Lọc ra nhân viên có nhiều hóa đơn có đơn giá lớn nhất.
+            var ds = from HDMua in dsHoaDonMuaHang
+                      join HDChiTiet in dsChiTietHDMuaHang on HDMua.maHoaDonMuaHang equals HDChiTiet.maHoaDonMuaHang into gr
+                      select new
+                      {
+                          tenNV = HDMua.nhanVien.tenNhanVien,
+                          donGia = gr.Sum(n => n.donGia)
+                      };
+            var ds2 = from hd in ds
+                      where hd.donGia == ds.Max(n => n.donGia)
+                      group hd by hd.tenNV into gr
+                      select new
+                      {
+                          tennv = gr.Key,
+                          soLuongHD = gr.Count()
+                      };
+            var ds3 = from nv in ds2
+                      where nv.soLuongHD == ds2.Max(n => n.soLuongHD)
+                      select nv.tennv;
+
+            foreach (var nv in ds)
+            {
+                Console.WriteLine("{0} - {1} ", nv.tenNV, nv.donGia);
+            }
+
+            Console.WriteLine("============= Nhân viên tư vấn nhiều hóa đơn có đơn giá lớn nhất =============");
+            foreach (var nv in ds3 )
+            {
+                Console.WriteLine("         Nhân viên: {0}", nv );
+            }
+
+            
+        }
+        public static void Linq09()
+        {
+            // 1: Tính tổng đơn giá trên mỗi hóa đơn mua. 
+            // 2: Lọc ra các đơn giá lớn nhất.  
+            // 3: Đếm số lượng hình thức thanh toán của mỗi khách hàng cho đơn giá lớn nhất.
+            // 4: Lọc ra khách hàng có nhiều hình thức thanh toán cho đơn giá lớn nhất.
+            var ds = from HDMua in dsHoaDonMuaHang
+                     join HDChiTiet in dsChiTietHDMuaHang on HDMua.maHoaDonMuaHang equals HDChiTiet.maHoaDonMuaHang into gr
+                     select new
+                     {
+                         tenKH = HDMua.khachHang.tenKhachHang,
+                         hinhThuc = HDMua.hinhThucThanhToan.tenHinhThucThanhToan,
+                         donGia = gr.Sum(n => n.donGia)
+                     };
+            var ds2 = from hd in ds
+                      where hd.donGia == ds.Max(n => n.donGia)
+                      group hd by new { hd.tenKH, hd.hinhThuc } into gr // 1 KH có nhiều hình thức, 1 hình thức thì thanh toán cho nhiều hóa đơn
+                      select new                                        
+                      {
+                          tenkh = gr.Key.tenKH,
+                          hinhthuc = gr.Key.hinhThuc,
+                          soLanHinhThuc = gr.Count()
+                      };
+            var ds3 = from kh in ds2
+                      group kh by kh.tenkh into gr
+                      select new
+                      {
+                          tenKh = gr.Key,
+                          soLuongHinhThuc = gr.Count()
+                      };
+            var ds4 = from kh in ds3
+                      where kh.soLuongHinhThuc == ds3.Max(n => n.soLuongHinhThuc)
+                      select kh.tenKh;
+
+            foreach (var kh in ds2)
+            {
+                Console.WriteLine("{0} - {1} - {2} ", kh.tenkh, kh.hinhthuc, kh.soLanHinhThuc);
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+            foreach (var kh in ds3)
+            {
+                Console.WriteLine("{0} - {1}  ", kh.tenKh, kh.soLuongHinhThuc);
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("============= Khách hàng đã thanh toán nhiều hình thức có đơn giá lớn nhất =============");
+            foreach (var kh in ds4)
+            {
+                Console.WriteLine("         Khách hàng: {0}", kh);
+            }
+        }
+        public static void Linq10()
+        {
+            // 1: Tính tổng đơn giá trên mỗi hóa đơn mua. 
+            // 2: Lọc ra các đơn giá nhỏ nhất.  
+            // 3: Đếm số lượng hình thức thanh toán của mỗi loại khách hàng cho đơn giá nhỏ nhất.
+            // 4: Lọc ra loại khách hàng có ít hình thức thanh toán cho đơn giá nhỏ nhất.
+
+            var ds = from HDMua in dsHoaDonMuaHang
+                     join HDChiTiet in dsChiTietHDMuaHang on HDMua.maHoaDonMuaHang equals HDChiTiet.maHoaDonMuaHang into gr
+                     select new
+                     {
+                         tenLoaiKH = HDMua.khachHang.loaiKhachHang.tenLoaiKhachHang,
+                         hinhThuc = HDMua.hinhThucThanhToan.tenHinhThucThanhToan,
+                         donGia = gr.Sum(n => n.donGia)
+                     };
+            var ds2 = from hd in ds
+                      where hd.donGia == ds.Min(n => n.donGia)
+                      group hd by new { hd.tenLoaiKH, hd.hinhThuc } into gr
+                      select new
+                      {
+                          tenloaikh = gr.Key.tenLoaiKH,
+                          hinhthuc = gr.Key.hinhThuc,
+                          soLanHinhThuc = gr.Count()
+                      };
+            var ds3 = from kh in ds2
+                      group kh by kh.tenloaikh into gr
+                      select new
+                      {
+                          tenloaiKh = gr.Key,
+                          soLuongHinhThuc = gr.Count()
+                      };
+            var ds4 = from kh in ds3
+                      where kh.soLuongHinhThuc == ds3.Min(n => n.soLuongHinhThuc)
+                      select kh.tenloaiKh;
+
+            foreach (var kh in ds2)
+            {
+                Console.WriteLine("{0} - {1} - {2} ", kh.tenloaikh, kh.hinhthuc, kh.soLanHinhThuc);
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+            foreach (var kh in ds3)
+            {
+                Console.WriteLine("{0} - {1}  ", kh.tenloaiKh, kh.soLuongHinhThuc);
+            }
+            Console.WriteLine("----------------------------------------------------------------");
+            Console.WriteLine("============= Loại khách hàng đã thanh toán ít hình thức có đơn giá nhỏ nhất =============");
+            foreach (var kh in ds4)
+            {
+                Console.WriteLine("         Loai khách hàng: {0}", kh);
+            }
+        }

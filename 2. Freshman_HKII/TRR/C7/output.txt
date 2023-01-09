@@ -1,0 +1,2 @@
+Duong di ngan nhat tu dinh 1 den dinh 9 la: 5
+Duong di: 1--> 2--> 9

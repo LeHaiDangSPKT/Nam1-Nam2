@@ -1,0 +1,18 @@
+.data
+
+
+.text
+main:
+	li $t0, 3
+	li $t1, 5
+	
+	mul $t2, $t0, $t1
+	
+	move $a0, $t2
+
+	li $v0, 1
+	syscall
+
+# exit
+li $v0, 10
+syscall

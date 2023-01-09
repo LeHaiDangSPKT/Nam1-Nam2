@@ -1,0 +1,44 @@
+BÀI TẬP STRUT 03/02/2021
+1. Phân số
+-Khai báo kiểu dữ liệu phân số (PHANSO)
+-Nhập/Xuất phân số
+-Rút gọn phân số
+-Tính tổng, hiệu, tích, thương hai phân số
+-Kiểm tra phân số tối giản
+-Quy đồng hai phân số
+-Kiểm tra phân số âm hay dương
+- So sánh hai phân số
+2. Điểm trong mặt phẳng Oxy
+-Khai báo kiểu dữ liệu điểm (DIEM)
+-Nhập/Xuất tọa độ điểm
+- Tính khoảng cách giữa hai điểm
+- Tìm điểm đối xứng qua gốc toạ độ/trục Ox/Oy
+- Kiểm tra điểm thuộc phần tư nào?
+3. Tam giác
+- Khai báo kiểu dữ lịêu tam giá
+3. Tam giác
+- Khai báo kiểu dữ lịêu tam giác (TAMGIAC)
+- Nhập/Xuất tam giác
+- Tính chu vi, diện tích tam giác
+4. Ngày
+-Khai báo kiểu dữ liệu ngày (NGAY)
+-Nhập/Xuất ngày (ngày, tháng, năm)
+-Kiểm tra năm nhuận
+-Tính số thứ tự ngày trong năm
+-Tính số thứ tự ngày kể từ ngày 1/1/1
+-Tìm ngày trước đó, sau đó k ngày
+-Tính khoảng cách giữa hai ngày
+- So sánh hai ngày
+5. Mảng phân số
+- Nhập/Xuất n phân số
+- Rút gọn mọi phân số
+- Đếm số lượng phân số âm/dương trong mảng
+- Tìm phân số dương đầu tiên trong mảng
+- Tìm phân số nhỏ nhất/lớn nhất trong mảng
+- Sắp xếp mảng tăng dần/giảm dần
+6. Mảng điểm
+-Nhập/Xuất n điểm
+-Đếm số lượng điểm có hoành độ dương
+-Đếm số lượng điểm không trùng với các điểm khác trong mảng
+-Tìm điểm có hoành độ lớn nhất/nhỏ nhất
+-Tìm điểm gần gốc tọa độ nhất

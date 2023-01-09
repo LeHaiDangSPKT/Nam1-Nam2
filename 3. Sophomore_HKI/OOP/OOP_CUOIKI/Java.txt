@@ -1,0 +1,173 @@
+public static void Linq1()
+    {
+    	Map<String, List<NhanVien>> kq = dsNhanVien.stream().collect(Collectors.groupingBy(p -> p.loaiNhanVien.tenLoaiNhanVien));
+        for(Entry<String, List<NhanVien>> group : kq.entrySet())
+        { 
+        	System.out.println("============================ Loại nhân viên " + group.getKey() + " ============================\n");
+        	System.out.format("               %-13s%-16s%-15s\n", "|Mã nhân viên" , " |Tên nhân viên", "  |Năm bắt đầu làm|");
+        	System.out.println("               ------------------------------------------------");
+        	for (NhanVien item : group.getValue())
+        		System.out.format("               |%-13s|%-16s|%-15d|\n", item.maNhanVien, item.tenNhanVien, item.namBatDauLam);
+        	System.out.println("\n\n");
+        } 
+    }
+    
+    public static void Linq2()
+    {
+        List<NhanVien> nhanVien = dsNhanVien.stream().filter(p -> p.namBatDauLam < 2016).collect(Collectors.toList());
+        
+        List<HoaDonMuaHang> kq = dsHoaDonMuaHang.stream()
+				        		.filter(p -> nhanVien.stream()
+				        					.anyMatch(f -> p.maNhanVien.equals(f.maNhanVien))).collect(Collectors.toList());
+        System.out.println("=============================== Danh sách những hợp đồng có nhân viên kinh nghiệm trên 5 năm tư vấn ===============================\n");
+        System.out.format("                              %-15s%-20s%-20s%-15s\n", "|Mã hợp đồng" , " |Mã số nhân viên", "  |Tên nhân viên", "|Năm bắt đầu làm|");
+        System.out.println("                             --------------------------------------------------------------------------");
+       
+        for (HoaDonMuaHang item : kq )
+        		System.out.format("                              |%-15s|%-20s|%-17s|%-15d|\n", item.maHoaDonMuaHang, item.maNhanVien, item.nhanVien.tenNhanVien, item.nhanVien.namBatDauLam);
+        System.out.println("\n\n");
+    }
+    
+    public static void Linq3()
+    {
+        Optional<ChiTietHoaDonMuaHang> max = dsChiTietHDMuaHang.stream().max(Comparator.comparingDouble(p -> p.donGia));
+        List<ChiTietHoaDonMuaHang> dsHD = dsChiTietHDMuaHang.stream()
+        									.filter(p -> p.donGia == max.get().donGia).collect(Collectors.toList());
+        
+        List<HoaDonMuaHang> kq = dsHoaDonMuaHang.stream()
+				        		.filter(p -> dsHD.stream()
+				        					.anyMatch(f -> p.maHoaDonMuaHang.equals(f.maHoaDonMuaHang)))
+				        		
+				        					.collect(Collectors.toList());
+        System.out.println("=============================== Danh sách những khách hàng mua hàng nhiều tiền nhất ===============================\n");
+        System.out.format("                    %-15s%-20s%-30s%-15s\n", "|Mã khách hàng" , " |Tên khách hàng", "  |Mã hóa đơn mua hàng", "|Số tiền |");
+        System.out.println("                   -----------------------------------------------------------------------------");
+       
+        for (HoaDonMuaHang item : kq )
+        		System.out.format("                    |%-15s|%-20s|%-27s|%-8.0f|\n", item.khachHang.maKhachHang, item.khachHang.tenKhachHang, item.maHoaDonMuaHang, max.get().donGia);   
+        System.out.println("\n\n");
+    }
+    
+    public static void Linq4()
+    {
+    	List<ChiTietHoaDonMuaHang> dsBan = dsChiTietHDMuaHang.stream()
+    			.collect(Collectors.groupingBy(p -> p.maSanPham))
+    			.entrySet().stream()
+    			.map(e -> e.getValue().stream()
+    					.reduce((f1,f2) -> new ChiTietHoaDonMuaHang(f1.maSanPham, f1.sanPham ,f1.donGia + f2.donGia, f1.soLuong + f2.soLuong)))
+    			.map(f -> f.get())
+    			.collect(Collectors.toList());   
+    	List<ChiTietHoaDonNhapHang> dsNhap = dsChiTietHDNhapHang.stream()
+    			.collect(Collectors.groupingBy(p -> p.maSanPham))
+    			.entrySet().stream()
+    			.map(e -> e.getValue().stream()
+    					.reduce((f1,f2) -> new ChiTietHoaDonNhapHang(f1.maSanPham, f1.sanPham, f1.donGia + f2.donGia, f1.soLuong + f2.soLuong)))
+    			.map(f -> f.get())
+    			.collect(Collectors.toList());
+    	int length = dsBan.size();
+    	for (int i=0; i<length; i++)
+    	{
+    		dsBan.get(i).maSanPham = dsNhap.get(i).maSanPham;
+    		dsBan.get(i).donGia = dsBan.get(i).donGia - (dsNhap.get(i).donGia/dsNhap.get(i).soLuong)*dsBan.get(i).soLuong;
+    		dsBan.get(i).maSanPham = dsNhap.get(i).maSanPham;
+    	}
+    	
+    	List<ChiTietHoaDonMuaHang> sortedList = dsBan.stream()
+    			.sorted((h1, h2) -> h1.getMaSanPham().compareTo(h2.maSanPham))
+    			.collect(Collectors.toList());
+
+    	System.out.println("=========================== Danh sách tiền lời theo từng sản phẩm ===========================\n");
+        System.out.format("                       %-15s%-20s%-15s\n", "|Mã sản phẩm" , " |Tên sản phẩm", "|Tiền lời |");
+        System.out.println("                      ------------------------------------------------");
+       
+        for (ChiTietHoaDonMuaHang item : sortedList )
+        		System.out.format("                       |%-15s|%-18s|%-9.0f|\n", item.maSanPham, item.sanPham.tenSanPham, item.donGia);   
+    	
+        System.out.println("\n\n");
+    }
+    
+    public static void Linq5() 
+    {
+    	 List<ChiTietHoaDonMuaHang> dsKH_SLMax = dsChiTietHDMuaHang.stream()
+	        		.filter(p -> dsHoaDonMuaHang.stream()
+	        					.anyMatch(f -> p.maHoaDonMuaHang.equals(f.maHoaDonMuaHang))).collect(Collectors.groupingBy(p -> p.hoaDonMuaHang.khachHang.tenKhachHang))
+	        					.entrySet().stream()
+	        					.map(e -> e.getValue().stream()
+	        							.max((f1, f2) -> f1.soLuong - f2.soLuong).get()).toList();
+    	 
+    	 List<ChiTietHoaDonMuaHang> kq = dsChiTietHDMuaHang.stream()
+    			 .filter(p -> dsKH_SLMax.stream()
+    					 .anyMatch(f -> p.hoaDonMuaHang.khachHang.tenKhachHang.equals(f.hoaDonMuaHang.khachHang.tenKhachHang) && p.soLuong == f.soLuong))
+    			 .map(p -> p).collect(Collectors.toList());    	 
+    	 
+    	 System.out.println("===================== Danh sách thương hiệu khách hàng sử dụng nhiều nhất =====================\n");
+         System.out.format("                         %-22s%-20s%n", "|Tên khách hàng" , " |Tên thương hiệu|");
+         System.out.println("                        ------------------------------------------");
+        
+         for (ChiTietHoaDonMuaHang item : kq )
+         		System.out.format("                         |%-22s|%-15s|\n", item.hoaDonMuaHang.khachHang.tenKhachHang, item.sanPham.thuongHieu.tenThuongHieu);   
+ 
+         System.out.println("\n\n");
+    }
+    public static void MenuLinQ()
+    {
+    	@SuppressWarnings("resource") //Tránh bị resource leak bởi vì sc không bao giờ đóng
+		Scanner sc = new Scanner(System.in);
+    	while (true)
+        {
+    		System.out.println("\t\t================================= Chọn danh sách lệnh =================================");
+    		System.out.println("\t\t\t1.In danh sách nhân viên theo loại nhân viên.");
+    		System.out.println("\t\t\t2.In danh sách những hợp đồng có nhân viên kinh nghiệm trên 5 năm tư vấn");
+    		System.out.println("\t\t\t3.In danh sách những khách hàng mua hàng nhiều tiền nhất.");
+    		System.out.println("\t\t\t4.In danh sách tiền lời theo từng sản phẩm.");
+    		System.out.println("\t\t\t5.In danh sách thương hiệu khách hàng sử dụng nhiều nhất.");
+    		System.out.println("\t\t\t6.Thoát.\n");
+    		System.out.print("\tMời nhập lựa chọn: ");
+    		int choose = sc.nextInt();
+    		
+            boolean exit = false;
+            switch (choose)
+            {
+                case 1:
+                    Linq1();
+                    break;
+                case 2:
+                    Linq2();
+                    break;
+                case 3:
+                    Linq3();
+                    break;
+                case 4:
+                    Linq4();
+                    break;
+                case 5:
+                    Linq5();
+                    break;
+                default:
+                	System.out.println("\n\n\t\t~~~~~~~~~~~~~~~~~~~~~~~ Tiến trình kết thúc ~~~~~~~~~~~~~~~~~~~~~~~");
+                    exit = true;
+                    break;
+            }
+            if (exit)
+                break;
+        }
+    }
+    public static void main(String args[]) {
+		
+    	taoDSNoiCungCap();
+        taoDSThuongHieu();
+        taoDSPhieuBaoHanh();
+        taoDSSanPham();
+        taoDSLoaiNhanVien();
+        taoDSNhanVien();
+        taoDSHoaDonNhapHang();
+        taoDSChiTietHDNhapHang();
+        taoDSLoaiKhachHang();
+        taoDSKhachHang();
+        taoDSHinhThucThanhToan();
+        taoDSHoaDonMuaHang();
+        capNhatDSHoaDon_KhachHang();
+        taoDSChiTietHDMuaHang();
+        MenuLinQ();
+    	
+	}

@@ -1,0 +1,148 @@
+a 100
+call 200	; xoa man hinh
+call 300	; in cot so
+call 400	; in dong so
+call 500	; in hang mau
+call 600	; in 4 mau
+call 700	; in ho ten, mssv
+mov ah,8
+int 21
+int 20
+
+a 200
+mov ah,6	
+mov al,0
+mov bh,f
+mov cx,0
+mov dx,184f
+int 10
+ret
+
+a 300	
+mov dh,0	
+mov cx,19
+mov dl,30	
+cmp dl,3a	
+jz 305
+push dx		
+mov ah,2
+mov dl,17	; edit cot so
+mov bh,0
+int 10
+pop dx		
+int 21		
+inc dh		
+inc dl		
+loop 307
+ret
+
+a 400		; edit hang so
+mov dh, 1	
+mov cx,50	
+mov bl,0
+mov dl,30	
+cmp dl,3a	
+jz 407
+push dx		
+mov ah,2
+mov bh,0
+mov dl,bl	
+int 10
+pop dx
+int 21
+inc bl
+inc dl
+loop 409
+ret
+
+a 500	
+mov dh,5	; edit hang mau bat dau
+cmp dh,16 	; cot mau nhay den 
+jz 500		
+mov dl, 0	
+mov cx, 50	 
+mov ah,2 	
+mov bh,0
+int 10
+mov ah,8	
+int 10
+push cx		
+mov ah,9	
+add bl,f
+mov cx,1
+int 10
+pop cx		
+inc dl		
+loop 50c 	
+mov ah,8	
+int 21
+cmp al,1b	
+jz 550 		
+mov dl,0	
+mov cx,80	
+mov ah,2 	
+mov bh,0	
+int 10
+mov ah,8	
+int 10
+push cx		
+mov ah,9	
+mov bl,f
+mov cx,1
+int 10
+pop cx		
+inc dl		
+loop 533 	
+inc dh
+jmp 502 
+ret
+
+a 600
+mov dx,0a3c	; toa do phai 1
+mov bh, 1f	
+mov cx,051b	; toa do trai 1
+mov ah,6	
+mov al,0
+int 10		
+mov dx,0e38	; toa do phai 2
+mov bh, ef	
+mov cx,0917	; toa do phai 2
+mov ah,6	
+mov al,0
+int 10		
+mov dx,1234	; toa do phai 3
+mov bh, 4f	
+mov cx,0d13	; toa do phai 3
+mov ah,6	
+mov al,0
+int 10		
+mov dx,1630	; toa do phai 4	
+mov bh, af	
+mov cx,110f	; toa do phai 4
+mov ah,6	
+mov al,0
+int 10		
+ret
+
+a 700
+mov ah,2	
+mov bh,0
+mov dh,11	; row - ten
+mov dl,1e	; col - ten
+int 10		
+mov ah,9	
+mov dx,800
+int 21		
+mov ah,2	
+mov bh,0
+mov dh,12	; row - mssv
+mov dl,23	; col - mssv
+int 10		
+mov ah,9	
+mov dx,850
+int 21		
+ret
+
+e 800 "Ho ten: Le Hai Dang$"
+e 850 "MSSV: 20110243$"
+g

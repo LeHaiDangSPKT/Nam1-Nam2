@@ -1,0 +1,483 @@
+ public static void Linq11()
+        {
+            var kq = dsNhanVien.GroupBy(p => p.loaiNhanVien.tenLoaiNhanVien);
+            foreach (var group in kq)
+            {
+                Console.WriteLine("=================================Loại nhân viên {0}=================================", group.Key);
+                Console.Write(String.Format("{0,-32}", $"\tMÃ NHÂN VIÊN"));
+                Console.Write(String.Format("{0,-30}", $"TÊN NHÂN VIÊN"));
+                Console.WriteLine(String.Format("{0,-40}", $"NĂM BẮT ĐẦU LÀM"));
+                foreach (var item in group)
+                {
+                    Console.Write(String.Format("{0,-29}", $"\t   {item.maNhanVien}"));
+                    Console.Write(String.Format("{0,-30}", $"{item.tenNhanVien}"));
+                    Console.WriteLine(String.Format("{0,-40}", $"\t   {item.namBatDauLam}"));
+                }
+                Console.WriteLine();
+            }
+        }
+        
+        public static void Linq12(string maNhanVien)
+        {
+            Console.WriteLine("=========================================================Thông tin nhân viên có mã {0}=========================================================", maNhanVien);
+            var kq = dsNhanVien.FirstOrDefault(p=> p.maNhanVien == maNhanVien);
+            Console.Write(String.Format("{0,-32}", $"\tTÊN LOẠI NHÂN VIÊN"));
+            Console.Write(String.Format("{0,-30}", $"MÃ NHÂN VIÊN"));
+            Console.Write(String.Format("{0,-30}", $"TÊN NHÂN VIÊN"));
+            Console.Write(String.Format("{0,-30}", $"NGÀY SINH"));
+            Console.WriteLine(String.Format("{0,-30}", $"NĂM BẮT ĐẦU LÀM"));
+
+            Console.Write(String.Format("{0,-32}", $"\t    {kq.loaiNhanVien.tenLoaiNhanVien}"));
+            Console.Write(String.Format("{0,-30}", $"   {kq.maNhanVien}"));
+            Console.Write(String.Format("{0,-25}", $"{kq.tenNhanVien}"));
+            Console.Write(String.Format("{0,-30}", $"{kq.ngaySinh}"));
+            Console.WriteLine(String.Format("{0,-30}", $"     {kq.namBatDauLam}"));
+            Console.WriteLine();
+
+        }
+
+        public static void Linq13()
+        {
+            var nhanVien = from p in dsNhanVien
+                     where p.namBatDauLam < 2016
+                     select p;
+            var kq = (from hoadon in dsHoaDonMuaHang
+                        join nv in nhanVien on hoadon.maNhanVien equals nv.maNhanVien
+                        select new { MAHANG = hoadon.maHoaDonMuaHang, MANV = hoadon.maNhanVien, NGAY = hoadon.nhanVien.namBatDauLam, TEN = hoadon.nhanVien.tenNhanVien});
+            Console.WriteLine("====================================Các hóa đơn được nhân viên có kinh nghiệm làm việc trên 5 năm tư vấn===================================");
+            Console.Write(String.Format("{0,-32}", $"\tMÃ HÓA ĐƠN MUA HÀNG"));
+            Console.Write(String.Format("{0,-30}", $"MÃ NHÂN VIÊN"));
+            Console.Write(String.Format("{0,-30}", $"NĂM BẮT ĐẦU LÀM"));
+            Console.WriteLine(String.Format("{0,-30}", $"TÊN NHÂN VIÊN"));
+
+
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t    {item.MAHANG}"));
+                Console.Write(String.Format("{0,-30}", $"   {item.MANV}"));
+                Console.Write(String.Format("{0,-30}", $"     {item.NGAY}"));
+                Console.WriteLine(String.Format("{0,-30}", $" {item.TEN}"));
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void Linq14()
+        {
+            var gia = dsChiTietHDMuaHang.Max(p => p.donGia);
+            var dsHD = from p in dsChiTietHDMuaHang
+                     where p.donGia == gia
+                     select p;
+            var kq = (from hd in dsHoaDonMuaHang
+                          join hd_ct in dsHD on hd.maHoaDonMuaHang equals hd_ct.maHoaDonMuaHang
+                          select new { MAKH = hd.khachHang.maKhachHang, TENKH = hd.khachHang.tenKhachHang, MAHD = hd.maHoaDonMuaHang, TIEN = hd_ct.donGia });
+            Console.WriteLine("=======================================Khách hàng mua hàng nhiều tiền nhất=======================================");
+            Console.Write(String.Format("{0,-32}", $"\tMÃ KHÁCH HÀNG"));
+            Console.Write(String.Format("{0,-30}", $"TÊN KHÁCH HÀNG"));
+            Console.Write(String.Format("{0,-30}", $"MÃ HÓA ĐƠN MUA HÀNG"));
+            Console.WriteLine(String.Format("{0,-30}", $"SỐ TIỀN"));
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t    {item.MAKH}"));
+                Console.Write(String.Format("{0,-30}", $"{item.TENKH}"));
+                Console.Write(String.Format("{0,-30}", $"     {item.MAHD}"));
+                Console.WriteLine(String.Format("{0,-30}", $" {item.TIEN}"));
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void Linq15()
+        {
+            var gia = dsChiTietHDMuaHang.Min(p => p.donGia);
+            var dsHD = from p in dsChiTietHDMuaHang
+                       where p.donGia == gia
+                       select p;
+            var kq = (from hd in dsHoaDonMuaHang
+                          join hd_ct in dsHD on hd.maHoaDonMuaHang equals hd_ct.maHoaDonMuaHang
+                          select new { MAKH = hd.khachHang.maKhachHang, TENKH = hd.khachHang.tenKhachHang, MAHD = hd.maHoaDonMuaHang, TIEN = hd_ct.donGia });
+            Console.WriteLine("=======================================Khách hàng mua hàng ít tiền nhất=======================================");
+            Console.Write(String.Format("{0,-32}", $"\tMÃ KHÁCH HÀNG"));
+            Console.Write(String.Format("{0,-30}", $"TÊN KHÁCH HÀNG"));
+            Console.Write(String.Format("{0,-30}", $"MÃ HÓA ĐƠN MUA HÀNG"));
+            Console.WriteLine(String.Format("{0,-30}", $"SỐ TIỀN"));
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t    {item.MAKH}"));
+                Console.Write(String.Format("{0,-30}", $"{item.TENKH}"));
+                Console.Write(String.Format("{0,-30}", $"     {item.MAHD}"));
+                Console.WriteLine(String.Format("{0,-30}", $" {item.TIEN}"));
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void Linq16()
+        {
+            var kq = dsChiTietHDMuaHang.Select(p => p);
+            Console.WriteLine("==========================================Trung bình số tiền/Hóa đơn==========================================");
+            Console.Write(String.Format("{0,-32}", $"\tMÃ HÓA ĐƠN"));
+            Console.Write(String.Format("{0,-30}", $"MÃ SẢN PHẨM"));
+            Console.Write(String.Format("{0,-30}", $"SỐ LƯỢNG"));
+            Console.WriteLine(String.Format("{0,-30}", $"SỐ TIỀN"));
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t {item.maHoaDonMuaHang}"));
+                Console.Write(String.Format("{0,-30}", $"   {item.maSanPham}"));
+                Console.Write(String.Format("{0,-30}", $"  {item.soLuong}"));
+                Console.WriteLine(String.Format("{0,-30}", $"{item.donGia}"));
+            }
+            Console.WriteLine(String.Format("{0,-50}", $"\t\t\t\t\t\t\t\t\t\t\tTrung bình: {kq.Average(n => n.donGia)}"));
+            Console.WriteLine();
+
+        }
+
+        public static void Linq17()
+        {
+            var dsNhap = from sp in dsSanPham
+                         join HDNhap in dsChiTietHDNhapHang on sp.maSanPham equals HDNhap.maSanPham into gr
+                         select new
+                         {
+                             maSanPham = sp.maSanPham,
+                             tenSanPham = sp.tenSanPham,
+                            tongTienNhap = gr.Sum(n => n.donGia),
+                            tongSoLuongNhap = gr.Sum(n => n.soLuong)
+                        };
+            
+            var dsBan = from sp in dsSanPham
+                     join HDBan in dsChiTietHDMuaHang on sp.maSanPham equals HDBan.maSanPham into gr
+                     select new
+                     {
+                         maSanPham = sp.maSanPham,
+                         tenSanPham = sp.tenSanPham, 
+                         tongTienBan = gr.Sum(n => n.donGia),
+                         tongSoLuongBan = gr.Sum(n => n.soLuong)
+                     };
+            var kq = (from nhap in dsNhap
+                     join ban in dsBan on nhap.maSanPham equals ban.maSanPham
+                     select new
+                     {
+                         maSanPham = nhap.maSanPham,
+                         tenSanPham = nhap.tenSanPham,
+                         tienLoi = (ban.tongTienBan - (nhap.tongTienNhap/nhap.tongSoLuongNhap) * ban.tongSoLuongBan)
+                     }).Distinct();
+
+            Console.WriteLine("========================== Tiền lời theo từng sản phẩm ==========================");
+            Console.Write(String.Format("{0,-32}", $"\tMÃ SẢN PHẨM"));
+            Console.Write(String.Format("{0,-30}", $"TÊN SẢN PHẨM"));
+            Console.WriteLine(String.Format("{0,-30}", $"SỐ TIỀN LỜI"));
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t  {item.maSanPham}"));
+                Console.Write(String.Format("{0,-30}", $"  {item.tenSanPham}"));
+                Console.WriteLine(String.Format("{0,-30}", $" {item.tienLoi}"));
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void Linq18()
+        {
+            var dsTen_SL = from HDMua in dsHoaDonMuaHang
+                     join HDChiTiet in dsChiTietHDMuaHang on HDMua.maHoaDonMuaHang equals HDChiTiet.maHoaDonMuaHang
+                     select new
+                     {
+                         tenKH = HDMua.khachHang.tenKhachHang,
+                         maSanPham = HDChiTiet.maSanPham,
+                         soLuong = HDChiTiet.soLuong
+                     };
+            var dsTen_SLMax = from item in dsTen_SL
+                                group item by item.tenKH into gr
+                                select new
+                                {
+                                    tenKH = gr.Key,
+                                    soLuong = gr.Max(n => n.soLuong)
+                                };
+            var kq = (from item1 in dsChiTietHDMuaHang
+                     join item2 in dsTen_SLMax on
+                        new { x1 = item1.hoaDonMuaHang.khachHang.tenKhachHang, x2 = item1.soLuong } 
+                            equals 
+                        new { x1 = item2.tenKH, x2 = item2.soLuong }
+                     select new
+                     {
+                         tenKH = item2.tenKH,
+                         thuongHieu = item1.sanPham.thuongHieu.tenThuongHieu
+                     }).Distinct();
+            Console.WriteLine("============= Thương hiệu khách hàng sử dụng nhiều nhất =============");
+            Console.Write(String.Format("{0,-32}", $"\tTÊN KHÁCH HÀNG"));
+            Console.WriteLine(String.Format("{0,-30}", $"TÊN THƯƠNG HIỆU"));
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t{item.tenKH}"));
+                Console.WriteLine(String.Format("{0,-30}", $"  {item.thuongHieu}"));
+            }
+            Console.WriteLine();
+
+        }
+
+
+        public static void Linq19()
+        {
+            var dsTen_MaSP = from HDMua in dsHoaDonMuaHang
+                             join HDChiTiet in dsChiTietHDMuaHang on HDMua.maHoaDonMuaHang equals HDChiTiet.maHoaDonMuaHang
+                             select new
+                             {
+                                 tenKH = HDMua.khachHang.tenKhachHang,
+                                 maSanPham = HDChiTiet.maSanPham,
+                                 soLuong = HDChiTiet.soLuong
+                             };
+            var dsTen_SLMax = from item in dsTen_MaSP
+                              group item by item.tenKH into gr
+                              select new
+                              {
+                                  tenKH = gr.Key,
+                                  soLuong = gr.Min(n => n.soLuong)
+                              };
+            var kq = (from item1 in dsChiTietHDMuaHang
+                     join item2 in dsTen_SLMax on
+                        new { x1 = item1.hoaDonMuaHang.khachHang.tenKhachHang, x2 = item1.soLuong }
+                            equals
+                        new { x1 = item2.tenKH, x2 = item2.soLuong }
+                     select new
+                     {
+                         tenKH = item2.tenKH,
+                         thuongHieu = item1.sanPham.thuongHieu.tenThuongHieu
+                     }).Distinct();
+            Console.WriteLine("============== Thương hiệu khách hàng ít sử dụng nhất ==============");
+            Console.Write(String.Format("{0,-32}", $"\tTÊN KHÁCH HÀNG"));
+            Console.WriteLine(String.Format("{0,-30}", $"TÊN THƯƠNG HIỆU"));
+            foreach (var item in kq)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t{item.tenKH}"));
+                Console.WriteLine(String.Format("{0,-30}", $"  {item.thuongHieu}"));
+            }
+            Console.WriteLine();
+
+        }
+        public static void Linq20(string maKH)
+        {
+            var hoadon = from hd in dsHoaDonMuaHang
+                         where hd.maKhachHang == maKH
+                         select new { TENKH = hd.khachHang.tenKhachHang, MAHD = hd.maHoaDonMuaHang, HTTT = hd.hinhThucThanhToan.tenHinhThucThanhToan };
+            Console.WriteLine("=============================Các hình thức thanh toán của khách hàng {0}=============================", maKH);
+            Console.Write(String.Format("{0,-32}", $"\tTÊN KHÁCH HÀNG"));
+            Console.Write(String.Format("{0,-30}", $"MÃ HÓA ĐƠN"));
+            Console.WriteLine(String.Format("{0,-30}", $"HÌNH THỨC THANH TOÁN"));
+            foreach (var item in hoadon)
+            {
+                Console.Write(String.Format("{0,-32}", $"\t{item.TENKH}"));
+                Console.Write(String.Format("{0,-30}", $"   {item.MAHD}"));
+                Console.WriteLine(String.Format("{0,-30}", $"   {item.HTTT}"));
+            }
+            Console.WriteLine();
+
+        }
+
+        public static void MeNuLinQ()
+        {
+            Console.OutputEncoding = Encoding.UTF8;
+
+            taoDSNoiCungCap();
+            taoDSThuongHieu();
+            taoDSPhieuBaoHanh();
+            taoDSSanPham();
+            taoDSLoaiNhanVien();
+            taoDSNhanVien();
+            taoDSHoaDonNhapHang();
+            taoDSChiTietHDNhapHang();
+            taoDSLoaiKhachHang();
+            taoDSKhachHang();
+            taoDSHinhThucThanhToan();
+            taoDSHoaDonMuaHang();
+            capNhatDSHoaDon_KhachHang();
+            taoDSChiTietHDMuaHang();
+
+            while (true)
+            {
+                Console.Clear();
+                Console.WriteLine("=================================== Chọn danh sách lệnh ===================================");
+                Console.WriteLine("\t11.In danh sách sinh viên theo loại nhân viên.");
+                Console.WriteLine("\t12.Tìm kiếm và in ra thông tin nhân viên thông qua mã nhân viên");
+                Console.WriteLine("\t13.In ra các hóa đơn được nhân viên có kinh nghiệm làm việc trên 5 năm tư vấn");
+                Console.WriteLine("\t14.Tìm kiếm và in ra khách hàng mua hàng nhiều tiền nhất");
+                Console.WriteLine("\t15.Tìm kiếm và in ra khách hàng mua hàng ít tiền nhất");
+                Console.WriteLine("\t16.Tính trung bình số tiền/hóa đơn");
+                Console.WriteLine("\t17.Tiền lời theo từng sản phẩm");
+                Console.WriteLine("\t18.Cho biết mỗi khách hàng hay dùng thương hiệu nào nhất.");
+                Console.WriteLine("\t19.Cho biết mỗi khách hàng ít dùng thương hiệu nào nhất");
+                Console.WriteLine("\t20.Cho biết các hình thức thanh toán của một khách hàng nào đó thông qua mã khách hàng");
+                Console.WriteLine("\t21.Thoát.");
+                Console.Write("\n\tMời bạn nhập lựa chọn: ");
+                int choose = int.Parse(Console.ReadLine());
+                bool exit = false;
+
+                switch (choose)
+                {
+                    case 11:
+                        Console.Clear();
+                        Linq11();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 12:
+                        Console.Clear();
+                        Console.WriteLine("============= Danh sách mã nhân viên =============");
+                        Console.WriteLine("\t1.NV001");
+                        Console.WriteLine("\t2.NV002");
+                        Console.WriteLine("\t3.NV003");
+                        Console.WriteLine("\t4.NV004");
+                        Console.WriteLine("\t5.NV005");
+
+                        int ch = int.Parse(Console.ReadLine());
+
+                        switch (ch)
+                        {
+                            case 1:
+                                Console.Clear();
+                                Linq12("NV001");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Linq12("NV002");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 3:
+                                Console.Clear();
+                                Linq12("NV003");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 4:
+                                Console.Clear();
+                                Linq12("NV004");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 5:
+                                Console.Clear();
+                                Linq12("NV005");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case 13:
+                        Console.Clear();
+                        Linq13();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 14:
+                        Console.Clear();
+                        Linq14();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 15:
+                        Console.Clear();
+                        Linq15();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 16:
+                        Console.Clear();
+                        Linq16();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 17:
+                        Console.Clear();
+                        Linq17();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 18:
+                        Console.Clear();
+                        Linq18();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 19:
+                        Console.Clear();
+                        Linq19();
+                        Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                        Console.ReadKey();
+                        break;
+                    case 20:
+                        Console.Clear();
+                        Console.WriteLine("============= Danh sách mã khách hàng =============");
+                        Console.WriteLine("\t1.KH001");
+                        Console.WriteLine("\t2.KH002");
+                        Console.WriteLine("\t3.KH003");
+                        Console.WriteLine("\t4.KH004");
+                        Console.WriteLine("\t5.KH005");
+                        Console.WriteLine("\t6.KH006");
+                        Console.WriteLine("\t7.KH007");
+
+                        ch = int.Parse(Console.ReadLine());
+
+                        switch (ch)
+                        {
+                            case 1:
+                                Console.Clear();
+                                Linq20("KH001");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 2:
+                                Console.Clear();
+                                Linq20("KH002");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 3:
+                                Console.Clear();
+                                Linq20("KH003");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 4:
+                                Console.Clear();
+                                Linq20("KH004");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 5:
+                                Console.Clear();
+                                Linq20("KH005");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 6:
+                                Console.Clear();
+                                Linq20("KH006");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            case 7:
+                                Console.Clear();
+                                Linq20("KH007");
+                                Console.Write("\nNhấn một phím bấm kì để tiếp túc...");
+                                Console.ReadKey();
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        exit = true;
+                        break;
+                }
+                if (exit)
+                    break;
+            }
+        }
+        static void Main(string[] args)
+        {
+            MeNuLinQ();
+        }
